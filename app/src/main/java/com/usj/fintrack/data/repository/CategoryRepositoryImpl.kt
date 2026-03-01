@@ -24,4 +24,6 @@ class CategoryRepositoryImpl @Inject constructor(
 
     override suspend fun insertDefaultCategories(categories: List<Category>) =
         categoryDao.insertAll(categories.map { it.toEntity() })
+
+    override suspend fun deleteCategory(id: Long) = categoryDao.deleteById(id)
 }

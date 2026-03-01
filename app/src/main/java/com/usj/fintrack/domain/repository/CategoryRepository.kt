@@ -8,4 +8,5 @@ interface CategoryRepository {
     suspend fun getCategoryById(id: Long): Category?
     suspend fun insertCategory(category: Category): Long
     suspend fun insertDefaultCategories(categories: List<Category>)
+    suspend fun deleteCategory(id: Long)
 }

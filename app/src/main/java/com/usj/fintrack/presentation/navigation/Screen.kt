@@ -63,13 +63,21 @@ sealed class Screen(val route: String) {
 
     // ── Budget sub-screens ────────────────────────────────────────────────────
     object CreateBudget : Screen("create_budget")
-
+    /** Deep-link: `edit_budget/{budgetId}` */
+    object EditBudget : Screen("edit_budget") {
+        const val ARG_ID = "budgetId"
+        val routeWithArg get() = "$route/{$ARG_ID}"
+        fun navRoute(id: Long) = "$route/$id"
+    }
     /** Deep-link: `budget_detail/{budgetId}` */
     object BudgetDetail : Screen("budget_detail") {
         const val ARG_ID = "budgetId"
         val routeWithArg get() = "$route/{$ARG_ID}"
         fun navRoute(id: Long) = "$route/$id"
     }
+
+    /** Full list of categories — reachable from the Budgets tab. */
+    object Categories : Screen("categories")
 
     // ── Goal sub-screens ──────────────────────────────────────────────────────
     object CreateGoal : Screen("create_goal")

@@ -15,6 +15,10 @@ import androidx.navigation.navArgument
 import com.usj.fintrack.presentation.account.AccountDetailScreen
 import com.usj.fintrack.presentation.account.AccountsScreen
 import com.usj.fintrack.presentation.account.CreateAccountScreen
+import com.usj.fintrack.presentation.budget.BudgetDetailScreen
+import com.usj.fintrack.presentation.budget.BudgetsScreen
+import com.usj.fintrack.presentation.budget.CreateBudgetScreen
+import com.usj.fintrack.presentation.category.CategoriesScreen
 import com.usj.fintrack.presentation.dashboard.DashboardScreen
 import com.usj.fintrack.presentation.transaction.CreateTransactionScreen
 import com.usj.fintrack.presentation.transaction.TransactionDetailScreen
@@ -69,7 +73,7 @@ fun AppNavGraph(
             AccountsScreen(navController = navController)
         }
         composable(Screen.Budgets.route) {
-            PlaceholderScreen("Presupuestos")
+            BudgetsScreen(navController = navController)
         }
         composable(Screen.Goals.route) {
             PlaceholderScreen("Metas")
@@ -158,8 +162,24 @@ fun AppNavGraph(
         }
 
         // ── Budget sub-screens ───────────────────────────────────────────────
+        composable(Screen.Categories.route) {
+            CategoriesScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
         composable(Screen.CreateBudget.route) {
-            PlaceholderScreen("Nuevo presupuesto")
+            CreateBudgetScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(
+            route     = Screen.EditBudget.routeWithArg,
+            arguments = listOf(
+                navArgument(Screen.EditBudget.ARG_ID) { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            CreateBudgetScreen(
+                onNavigateBack = { navController.popBackStack() },
+                budgetId = backStackEntry.arguments?.getLong(Screen.EditBudget.ARG_ID)
+            )
         }
 
         composable(
@@ -167,8 +187,14 @@ fun AppNavGraph(
             arguments = listOf(
                 navArgument(Screen.BudgetDetail.ARG_ID) { type = NavType.LongType }
             )
-        ) {
-            PlaceholderScreen("Detalle presupuesto")
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong(Screen.BudgetDetail.ARG_ID) ?: 0L
+            BudgetDetailScreen(
+                budgetId = id,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { budgetId -> navController.navigate(Screen.EditBudget.navRoute(budgetId)) },
+                onNavigateToTransactionDetail = { id -> navController.navigate(Screen.TransactionDetail.navRoute(id)) }
+            )
         }
 
         // ── Goal sub-screens ─────────────────────────────────────────────────
