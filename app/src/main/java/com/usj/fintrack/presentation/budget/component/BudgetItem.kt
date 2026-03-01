@@ -98,9 +98,9 @@ fun BudgetItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (budgetStatus.remainingAmount >= 0)
-                        "$sym%.2f remaining".format(budgetStatus.remainingAmount)
+                        "$sym${"%.2f".format(budgetStatus.remainingAmount)} remaining"
                     else
-                        "$sym%.2f over budget".format(-budgetStatus.remainingAmount),
+                        "$sym${"%.2f".format(-budgetStatus.remainingAmount)} over budget",
                     style = MaterialTheme.typography.bodySmall,
                     color = statusColor
                 )

@@ -65,12 +65,12 @@ fun BudgetProgressBar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "\u20ac%.2f spent".format(spentAmount),
+                text = "$sym${"%.2f".format(spentAmount)} spent",
                 style = MaterialTheme.typography.bodySmall,
                 color = progressColor
             )
             Text(
-                text = "of \u20ac%.2f".format(budget.limitAmount),
+                text = "of $sym${"%.2f".format(budget.limitAmount)}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

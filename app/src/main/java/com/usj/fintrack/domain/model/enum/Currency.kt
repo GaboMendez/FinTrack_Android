@@ -9,6 +9,5 @@ package com.usj.fintrack.domain.model.enum
  */
 enum class Currency(val symbol: String) {
     USD("$"),
-    EUR("€"),
-    GBP("£")
+    EUR("€")
 }

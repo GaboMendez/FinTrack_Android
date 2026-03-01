@@ -257,7 +257,7 @@ fun GoalDetailScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = "$sym%.2f / $sym%.2f".format(goal.currentAmount, goal.targetAmount),
+                            text = "$sym${"%.2f".format(goal.currentAmount)} / $sym${"%.2f".format(goal.targetAmount)}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -282,12 +282,12 @@ fun GoalDetailScreen(
                     HorizontalDivider()
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    DetailRow(label = "Target", value = "$sym%.2f".format(goal.targetAmount))
+                    DetailRow(label = "Target", value = "$sym${"%.2f".format(goal.targetAmount)}")
                     Spacer(modifier = Modifier.height(8.dp))
-                    DetailRow(label = "Saved so far", value = "$sym%.2f".format(goal.currentAmount))
+                    DetailRow(label = "Saved so far", value = "$sym${"%.2f".format(goal.currentAmount)}")
                     if (!goal.isCompleted) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        DetailRow(label = "Remaining", value = "$sym%.2f".format(remaining))
+                        DetailRow(label = "Remaining", value = "$sym${"%.2f".format(remaining)}")
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     DetailRow(label = "Deadline", value = deadlineFormatted)

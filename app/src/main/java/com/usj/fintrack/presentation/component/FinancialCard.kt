@@ -39,7 +39,7 @@ fun FinancialCard(
             val sign = if (type == TransactionType.INCOME) "+" else "-"
             val sym = LocalCurrencySymbol.current
             Text(
-                text = "$sign$sym%.2f".format(amount),
+                text = "$sign$sym${"%.2f".format(amount)}",
                 style = MaterialTheme.typography.headlineSmall,
                 color = amountColor
             )

@@ -103,7 +103,7 @@ fun TransactionListItem(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "$sign$sym%.2f".format(transaction.amount),
+                text = "$sign$sym${"%.2f".format(transaction.amount)}",
                 style = MaterialTheme.typography.titleMedium,
                 color = amountColor
             )

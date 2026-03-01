@@ -111,12 +111,12 @@ fun GoalProgressCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "$sym%.2f saved".format(goal.currentAmount),
+                    text = "$sym${"%.2f".format(goal.currentAmount)} saved",
                     style = MaterialTheme.typography.bodySmall,
                     color = progressColor
                 )
                 Text(
-                    text = "of $sym%.2f".format(goal.targetAmount),
+                    text = "of $sym${"%.2f".format(goal.targetAmount)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -136,7 +136,7 @@ fun GoalProgressCard(
                 )
                 if (!isEffectivelyCompleted) {
                     Text(
-                        text = "$sym%.2f left".format(remaining),
+                        text = "$sym${"%.2f".format(remaining)} left",
                         style = MaterialTheme.typography.bodySmall,
                         color = Amber40
                     )

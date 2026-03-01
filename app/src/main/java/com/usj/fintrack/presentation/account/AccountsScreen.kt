@@ -91,7 +91,7 @@ fun AccountsScreen(
                     Column {
                         Text("Accounts")
                         Text(
-                            text = "Total: $sym%.2f".format(uiState.totalBalance),
+                            text = "Total: $sym${"%.2f".format(uiState.totalBalance)}",
                             style = MaterialTheme.typography.bodySmall,
                             color = IncomeGreen
                         )
