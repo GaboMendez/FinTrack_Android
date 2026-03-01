@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                                                 contentDescription = item.label
                                             )
                                         },
-                                        label = { Text(text = item.label, fontSize = 10.sp) }
+                                        label = { Text(text = item.label, fontSize = 11.sp) }
                                     )
                                 }
                             }

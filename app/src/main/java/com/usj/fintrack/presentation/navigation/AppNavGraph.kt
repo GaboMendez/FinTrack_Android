@@ -20,6 +20,9 @@ import com.usj.fintrack.presentation.budget.BudgetsScreen
 import com.usj.fintrack.presentation.budget.CreateBudgetScreen
 import com.usj.fintrack.presentation.category.CategoriesScreen
 import com.usj.fintrack.presentation.dashboard.DashboardScreen
+import com.usj.fintrack.presentation.goal.CreateGoalScreen
+import com.usj.fintrack.presentation.goal.GoalDetailScreen
+import com.usj.fintrack.presentation.goal.GoalsScreen
 import com.usj.fintrack.presentation.transaction.CreateTransactionScreen
 import com.usj.fintrack.presentation.transaction.TransactionDetailScreen
 import com.usj.fintrack.presentation.transaction.TransactionsScreen
@@ -76,7 +79,11 @@ fun AppNavGraph(
             BudgetsScreen(navController = navController)
         }
         composable(Screen.Goals.route) {
-            PlaceholderScreen("Metas")
+            GoalsScreen(
+                onNavigateToCreate = { navController.navigate(Screen.CreateGoal.route) },
+                onNavigateToDetail = { id -> navController.navigate(Screen.GoalDetail.navRoute(id)) },
+                onNavigateToEdit   = { id -> navController.navigate(Screen.EditGoal.navRoute(id)) }
+            )
         }
 
         // ── Transaction sub-screens ──────────────────────────────────────────
@@ -199,7 +206,19 @@ fun AppNavGraph(
 
         // ── Goal sub-screens ─────────────────────────────────────────────────
         composable(Screen.CreateGoal.route) {
-            PlaceholderScreen("Nueva meta")
+            CreateGoalScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(
+            route     = Screen.EditGoal.routeWithArg,
+            arguments = listOf(
+                navArgument(Screen.EditGoal.ARG_ID) { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            CreateGoalScreen(
+                onNavigateBack = { navController.popBackStack() },
+                goalId = backStackEntry.arguments?.getLong(Screen.EditGoal.ARG_ID)
+            )
         }
 
         composable(
@@ -207,8 +226,13 @@ fun AppNavGraph(
             arguments = listOf(
                 navArgument(Screen.GoalDetail.ARG_ID) { type = NavType.LongType }
             )
-        ) {
-            PlaceholderScreen("Detalle meta")
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong(Screen.GoalDetail.ARG_ID) ?: 0L
+            GoalDetailScreen(
+                goalId = id,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { goalId -> navController.navigate(Screen.EditGoal.navRoute(goalId)) }
+            )
         }
     }
 }

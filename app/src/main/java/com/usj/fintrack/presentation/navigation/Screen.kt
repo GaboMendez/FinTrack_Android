@@ -82,6 +82,13 @@ sealed class Screen(val route: String) {
     // ── Goal sub-screens ──────────────────────────────────────────────────────
     object CreateGoal : Screen("create_goal")
 
+    /** Deep-link: `edit_goal/{goalId}` */
+    object EditGoal : Screen("edit_goal") {
+        const val ARG_ID = "goalId"
+        val routeWithArg get() = "$route/{$ARG_ID}"
+        fun navRoute(id: Long) = "$route/$id"
+    }
+
     /** Deep-link: `goal_detail/{goalId}` */
     object GoalDetail : Screen("goal_detail") {
         const val ARG_ID = "goalId"
