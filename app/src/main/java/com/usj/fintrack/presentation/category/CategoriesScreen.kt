@@ -312,24 +312,6 @@ private fun CategoryDialog(
                     }
                 }
 
-                // ── Default toggle ──────────────────────────────────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Default category", style = MaterialTheme.typography.bodyMedium)
-                        Text(
-                            text = "Default categories are protected from deletion",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    Switch(
-                        checked = isDefault,
-                        onCheckedChange = { isDefault = it }
-                    )
-                }
             }
         },
         confirmButton = {
