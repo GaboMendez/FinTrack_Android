@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.usj.fintrack.domain.model.enum.TransactionType
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 
 @Composable
 fun FinancialCard(
@@ -36,8 +37,9 @@ fun FinancialCard(
             Spacer(modifier = Modifier.height(4.dp))
             val amountColor = if (type == TransactionType.INCOME) IncomeGreen else ExpenseRed
             val sign = if (type == TransactionType.INCOME) "+" else "-"
+            val sym = LocalCurrencySymbol.current
             Text(
-                text = "$sign€%.2f".format(amount),
+                text = "$sign$sym%.2f".format(amount),
                 style = MaterialTheme.typography.headlineSmall,
                 color = amountColor
             )

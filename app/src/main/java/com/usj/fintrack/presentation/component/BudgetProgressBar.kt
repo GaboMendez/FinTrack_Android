@@ -19,6 +19,7 @@ import com.usj.fintrack.domain.model.enum.BudgetStatusType
 import com.usj.fintrack.presentation.theme.Amber40
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 
 /**
  * Renders a spending progress bar for a budget.
@@ -33,6 +34,7 @@ fun BudgetProgressBar(
     budgetStatus: BudgetStatus? = null,
     modifier: Modifier = Modifier
 ) {
+    val sym = LocalCurrencySymbol.current
     val spentAmount = budgetStatus?.computedSpentAmount ?: budget.spentAmount
     val statusType  = budgetStatus?.computedStatusType  ?: budget.status
 

@@ -95,6 +95,9 @@ sealed class Screen(val route: String) {
         val routeWithArg get() = "$route/{$ARG_ID}"
         fun navRoute(id: Long) = "$route/$id"
     }
+
+    // ── Settings ──────────────────────────────────────────────────────────────
+    object Settings : Screen("settings")
 }
 
 /** Routes for which the bottom navigation bar should be visible. */

@@ -5,12 +5,14 @@ import com.usj.fintrack.data.repository.BudgetRepositoryImpl
 import com.usj.fintrack.data.repository.CategoryRepositoryImpl
 import com.usj.fintrack.data.repository.GoalRepositoryImpl
 import com.usj.fintrack.data.repository.TransactionRepositoryImpl
+import com.usj.fintrack.data.repository.UserPreferencesRepositoryImpl
 import com.usj.fintrack.data.repository.UserRepositoryImpl
 import com.usj.fintrack.domain.repository.AccountRepository
 import com.usj.fintrack.domain.repository.BudgetRepository
 import com.usj.fintrack.domain.repository.CategoryRepository
 import com.usj.fintrack.domain.repository.GoalRepository
 import com.usj.fintrack.domain.repository.TransactionRepository
+import com.usj.fintrack.domain.repository.UserPreferencesRepository
 import com.usj.fintrack.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -57,4 +59,10 @@ abstract class RepositoryModule {
     abstract fun bindGoalRepository(
         impl: GoalRepositoryImpl
     ): GoalRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserPreferencesRepository(
+        impl: UserPreferencesRepositoryImpl
+    ): UserPreferencesRepository
 }

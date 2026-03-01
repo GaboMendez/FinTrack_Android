@@ -7,16 +7,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 
 @Composable
 fun AmountTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    currencySymbol: String = "€",
+    currencySymbol: String? = null,
     label: String = "Amount",
     isError: Boolean = false
 ) {
+    val sym = currencySymbol ?: LocalCurrencySymbol.current
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -24,7 +26,7 @@ fun AmountTextField(
         label = { Text(label) },
         leadingIcon = {
             Text(
-                text = currencySymbol,
+                text = sym,
                 style = MaterialTheme.typography.bodyLarge
             )
         },

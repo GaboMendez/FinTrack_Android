@@ -52,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.usj.fintrack.presentation.component.LoadingIndicator
 import com.usj.fintrack.presentation.theme.Amber40
 import com.usj.fintrack.presentation.theme.FinTrackGreen40
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -187,6 +188,7 @@ fun GoalDetailScreen(
         val isEffectivelyCompleted = goal.isCompleted || progress >= 1f
         val progressColor = if (isEffectivelyCompleted) FinTrackGreen40 else Amber40
         val remaining = (goal.targetAmount - goal.currentAmount).coerceAtLeast(0.0)
+        val sym = LocalCurrencySymbol.current
         val deadlineFormatted =
             SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date(goal.deadline))
 
@@ -255,7 +257,7 @@ fun GoalDetailScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = "€%.2f / €%.2f".format(goal.currentAmount, goal.targetAmount),
+                            text = "$sym%.2f / $sym%.2f".format(goal.currentAmount, goal.targetAmount),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -280,12 +282,12 @@ fun GoalDetailScreen(
                     HorizontalDivider()
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    DetailRow(label = "Target", value = "€%.2f".format(goal.targetAmount))
+                    DetailRow(label = "Target", value = "$sym%.2f".format(goal.targetAmount))
                     Spacer(modifier = Modifier.height(8.dp))
-                    DetailRow(label = "Saved so far", value = "€%.2f".format(goal.currentAmount))
+                    DetailRow(label = "Saved so far", value = "$sym%.2f".format(goal.currentAmount))
                     if (!goal.isCompleted) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        DetailRow(label = "Remaining", value = "€%.2f".format(remaining))
+                        DetailRow(label = "Remaining", value = "$sym%.2f".format(remaining))
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     DetailRow(label = "Deadline", value = deadlineFormatted)
@@ -357,7 +359,7 @@ private fun ContributionDialog(
                     value = amountText,
                     onValueChange = { amountText = it },
                     label = { Text("Amount") },
-                    leadingIcon = { Text("€", style = MaterialTheme.typography.bodyLarge) },
+                    leadingIcon = { Text(LocalCurrencySymbol.current, style = MaterialTheme.typography.bodyLarge) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     singleLine = true,
                     isError = amountText.isNotEmpty() && amount == null

@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,6 +43,7 @@ import com.usj.fintrack.presentation.navigation.Screen
 @Composable
 fun BudgetsScreen(
     navController: NavController,
+    onNavigateToSettings: () -> Unit,
     viewModel: BudgetsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -82,6 +84,12 @@ fun BudgetsScreen(
             TopAppBar(
                 title = { Text("Budgets") },
                 actions = {
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Settings"
+                        )
+                    }
                     IconButton(onClick = { navController.navigate(Screen.Categories.route) }) {
                         Icon(
                             imageVector = Icons.Default.Settings,

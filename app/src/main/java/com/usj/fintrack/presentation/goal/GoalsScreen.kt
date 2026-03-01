@@ -10,7 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.usj.fintrack.domain.model.Goal
+import com.usj.fintrack.presentation.navigation.Screen
 import com.usj.fintrack.presentation.component.LoadingIndicator
 import com.usj.fintrack.presentation.goal.component.GoalProgressCard
 
@@ -42,6 +45,7 @@ fun GoalsScreen(
     onNavigateToCreate: () -> Unit,
     onNavigateToDetail: (Long) -> Unit,
     onNavigateToEdit: (Long) -> Unit,
+    onNavigateToSettings: () -> Unit,
     viewModel: GoalsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -77,7 +81,17 @@ fun GoalsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Goals") })
+            TopAppBar(
+                title = { Text("Goals") },
+                actions = {
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Settings"
+                        )
+                    }
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onNavigateToCreate) {

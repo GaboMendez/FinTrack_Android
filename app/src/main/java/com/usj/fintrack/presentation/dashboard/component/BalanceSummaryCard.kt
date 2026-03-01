@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 
 @Composable
 fun BalanceSummaryCard(
@@ -43,8 +44,9 @@ fun BalanceSummaryCard(
             )
             Spacer(modifier = Modifier.height(4.dp))
             val balanceSign = if (totalBalance >= 0) "+" else ""
+            val sym = LocalCurrencySymbol.current
             Text(
-                text = "$balanceSign€%.2f".format(totalBalance),
+                text = "$balanceSign$sym%.2f".format(totalBalance),
                 style = MaterialTheme.typography.displaySmall,
                 color = if (totalBalance >= 0) IncomeGreen else ExpenseRed
             )
@@ -65,7 +67,7 @@ fun BalanceSummaryCard(
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "+€%.2f".format(monthlyIncome),
+                        text = "+$sym%.2f".format(monthlyIncome),
                         style = MaterialTheme.typography.titleMedium,
                         color = IncomeGreen
                     )
@@ -78,7 +80,7 @@ fun BalanceSummaryCard(
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "-€%.2f".format(monthlyExpense),
+                        text = "-$sym%.2f".format(monthlyExpense),
                         style = MaterialTheme.typography.titleMedium,
                         color = ExpenseRed
                     )

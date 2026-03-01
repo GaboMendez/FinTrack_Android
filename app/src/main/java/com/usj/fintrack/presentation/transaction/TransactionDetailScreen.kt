@@ -42,6 +42,7 @@ import com.usj.fintrack.presentation.component.CategoryChip
 import com.usj.fintrack.presentation.component.LoadingIndicator
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -146,6 +147,7 @@ fun TransactionDetailScreen(
                 val transaction = uiState.transaction!!
                 val amountColor = if (transaction.type == TransactionType.INCOME) IncomeGreen else ExpenseRed
                 val sign = if (transaction.type == TransactionType.INCOME) "+" else "-"
+                val sym = LocalCurrencySymbol.current
 
                 Column(
                     modifier = Modifier
@@ -159,7 +161,7 @@ fun TransactionDetailScreen(
 
                     // Amount
                     Text(
-                        text = "$sign€${"%.2f".format(transaction.amount)}",
+                        text = "$sign$sym${"%.2f".format(transaction.amount)}",
                         style = MaterialTheme.typography.headlineMedium,
                         color = amountColor
                     )

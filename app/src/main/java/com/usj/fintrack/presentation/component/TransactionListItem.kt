@@ -27,6 +27,7 @@ import com.usj.fintrack.domain.model.Transaction
 import com.usj.fintrack.domain.model.enum.TransactionType
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,6 +45,7 @@ fun TransactionListItem(
     val formattedDate = dateFormatter.format(Date(transaction.date))
     val amountColor = if (transaction.type == TransactionType.INCOME) IncomeGreen else ExpenseRed
     val sign = if (transaction.type == TransactionType.INCOME) "+" else "-"
+    val sym = LocalCurrencySymbol.current
 
     Row(
         modifier = modifier
@@ -101,7 +103,7 @@ fun TransactionListItem(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "$sign€%.2f".format(transaction.amount),
+                text = "$sign$sym%.2f".format(transaction.amount),
                 style = MaterialTheme.typography.titleMedium,
                 color = amountColor
             )

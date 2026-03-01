@@ -23,6 +23,7 @@ import com.usj.fintrack.presentation.theme.Amber40
 import com.usj.fintrack.presentation.theme.Amber80
 import com.usj.fintrack.presentation.theme.FinTrackGreen40
 import com.usj.fintrack.presentation.theme.FinTrackGreen80
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -51,6 +52,7 @@ fun GoalProgressCard(
     val deadlineFormatted = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         .format(Date(goal.deadline))
     val remaining = (goal.targetAmount - goal.currentAmount).coerceAtLeast(0.0)
+    val sym = LocalCurrencySymbol.current
 
     Card(
         onClick = onClick,
@@ -109,12 +111,12 @@ fun GoalProgressCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "€%.2f saved".format(goal.currentAmount),
+                    text = "$sym%.2f saved".format(goal.currentAmount),
                     style = MaterialTheme.typography.bodySmall,
                     color = progressColor
                 )
                 Text(
-                    text = "of €%.2f".format(goal.targetAmount),
+                    text = "of $sym%.2f".format(goal.targetAmount),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -134,7 +136,7 @@ fun GoalProgressCard(
                 )
                 if (!isEffectivelyCompleted) {
                     Text(
-                        text = "€%.2f left".format(remaining),
+                        text = "$sym%.2f left".format(remaining),
                         style = MaterialTheme.typography.bodySmall,
                         color = Amber40
                     )

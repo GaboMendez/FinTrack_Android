@@ -29,6 +29,7 @@ import com.usj.fintrack.presentation.component.BudgetProgressBar
 import com.usj.fintrack.presentation.theme.Amber40
 import com.usj.fintrack.presentation.theme.ExpenseRed
 import com.usj.fintrack.presentation.theme.IncomeGreen
+import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,6 +45,7 @@ fun BudgetItem(
     onDelete: (() -> Unit)? = null
 ) {
     val formatter = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    val sym = LocalCurrencySymbol.current
     val statusColor = when (budgetStatus?.computedStatusType ?: budget.status) {
         BudgetStatusType.ON_TRACK -> IncomeGreen
         BudgetStatusType.WARNING  -> Amber40
@@ -96,9 +98,9 @@ fun BudgetItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (budgetStatus.remainingAmount >= 0)
-                        "€%.2f remaining".format(budgetStatus.remainingAmount)
+                        "$sym%.2f remaining".format(budgetStatus.remainingAmount)
                     else
-                        "€%.2f over budget".format(-budgetStatus.remainingAmount),
+                        "$sym%.2f over budget".format(-budgetStatus.remainingAmount),
                     style = MaterialTheme.typography.bodySmall,
                     color = statusColor
                 )

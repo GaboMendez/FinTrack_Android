@@ -23,6 +23,7 @@ import com.usj.fintrack.presentation.dashboard.DashboardScreen
 import com.usj.fintrack.presentation.goal.CreateGoalScreen
 import com.usj.fintrack.presentation.goal.GoalDetailScreen
 import com.usj.fintrack.presentation.goal.GoalsScreen
+import com.usj.fintrack.presentation.settings.SettingsScreen
 import com.usj.fintrack.presentation.transaction.CreateTransactionScreen
 import com.usj.fintrack.presentation.transaction.TransactionDetailScreen
 import com.usj.fintrack.presentation.transaction.TransactionsScreen
@@ -63,26 +64,37 @@ fun AppNavGraph(
 
         // ── Main bottom-nav destinations ─────────────────────────────────────
         composable(Screen.Dashboard.route) {
-            DashboardScreen(navController = navController)
+            DashboardScreen(
+                navController = navController,
+                onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
+            )
         }
         composable(Screen.Transactions.route) {
             TransactionsScreen(
-                onNavigateToCreate = { navController.navigate(Screen.CreateTransaction.route) },
-                onNavigateToDetail = { id -> navController.navigate(Screen.TransactionDetail.navRoute(id)) },
-                onNavigateToEdit = { id -> navController.navigate(Screen.EditTransaction.navRoute(id)) }
+                onNavigateToCreate  = { navController.navigate(Screen.CreateTransaction.route) },
+                onNavigateToDetail  = { id -> navController.navigate(Screen.TransactionDetail.navRoute(id)) },
+                onNavigateToEdit    = { id -> navController.navigate(Screen.EditTransaction.navRoute(id)) },
+                onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
             )
         }
         composable(Screen.Accounts.route) {
-            AccountsScreen(navController = navController)
+            AccountsScreen(
+                navController = navController,
+                onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
+            )
         }
         composable(Screen.Budgets.route) {
-            BudgetsScreen(navController = navController)
+            BudgetsScreen(
+                navController = navController,
+                onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
+            )
         }
         composable(Screen.Goals.route) {
             GoalsScreen(
-                onNavigateToCreate = { navController.navigate(Screen.CreateGoal.route) },
-                onNavigateToDetail = { id -> navController.navigate(Screen.GoalDetail.navRoute(id)) },
-                onNavigateToEdit   = { id -> navController.navigate(Screen.EditGoal.navRoute(id)) }
+                onNavigateToCreate   = { navController.navigate(Screen.CreateGoal.route) },
+                onNavigateToDetail   = { id -> navController.navigate(Screen.GoalDetail.navRoute(id)) },
+                onNavigateToEdit     = { id -> navController.navigate(Screen.EditGoal.navRoute(id)) },
+                onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
             )
         }
 
@@ -233,6 +245,11 @@ fun AppNavGraph(
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToEdit = { goalId -> navController.navigate(Screen.EditGoal.navRoute(goalId)) }
             )
+        }
+
+        // ── Settings ─────────────────────────────────────────────────────────
+        composable(Screen.Settings.route) {
+            SettingsScreen(onNavigateBack = { navController.popBackStack() })
         }
     }
 }
