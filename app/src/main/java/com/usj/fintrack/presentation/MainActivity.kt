@@ -24,7 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.usj.fintrack.presentation.navigation.Screen
 import com.usj.fintrack.presentation.navigation.bottomNavItems
 import com.usj.fintrack.presentation.navigation.mainScreenRoutes
-import com.usj.fintrack.ui.theme.FinTrackTheme
+import com.usj.fintrack.presentation.theme.FinTrackTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
