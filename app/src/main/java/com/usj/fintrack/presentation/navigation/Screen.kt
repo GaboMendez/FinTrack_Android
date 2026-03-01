@@ -16,6 +16,13 @@ sealed class Screen(val route: String) {
     // ── Transaction sub-screens ───────────────────────────────────────────────
     object CreateTransaction : Screen("create_transaction")
 
+    /** Deep-link: `edit_transaction/{transactionId}` */
+    object EditTransaction : Screen("edit_transaction") {
+        const val ARG_ID = "transactionId"
+        val routeWithArg get() = "$route/{$ARG_ID}"
+        fun navRoute(id: Long) = "$route/$id"
+    }
+
     /** Deep-link: `transaction_detail/{transactionId}` */
     object TransactionDetail : Screen("transaction_detail") {
         const val ARG_ID = "transactionId"

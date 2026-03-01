@@ -48,6 +48,7 @@ fun AccountDetailScreen(
     accountId: Long,
     onNavigateBack: () -> Unit,
     onNavigateToEdit: () -> Unit,
+    onNavigateToTransactionDetail: (Long) -> Unit,
     viewModel: AccountDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -157,7 +158,7 @@ fun AccountDetailScreen(
                     items(uiState.transactions, key = { it.id }) { transaction ->
                         TransactionListItem(
                             transaction = transaction,
-                            onClick = {}
+                            onClick = { onNavigateToTransactionDetail(transaction.id) }
                         )
                         HorizontalDivider()
                     }

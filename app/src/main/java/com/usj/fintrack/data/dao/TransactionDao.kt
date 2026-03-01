@@ -41,6 +41,14 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE transaction_id = :id")
     suspend fun getTransactionWithCategories(id: Long): TransactionWithCategories?
 
+    @Transaction
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
+    fun getAllWithCategories(): Flow<List<TransactionWithCategories>>
+
+    @Transaction
+    @Query("SELECT * FROM transactions WHERE account_id = :accountId ORDER BY date DESC")
+    fun getByAccountWithCategories(accountId: Long): Flow<List<TransactionWithCategories>>
+
     @Query("""
         SELECT SUM(amount) FROM transactions
         WHERE type = :type AND date BETWEEN :startDate AND :endDate

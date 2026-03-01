@@ -16,6 +16,9 @@ import com.usj.fintrack.presentation.account.AccountDetailScreen
 import com.usj.fintrack.presentation.account.AccountsScreen
 import com.usj.fintrack.presentation.account.CreateAccountScreen
 import com.usj.fintrack.presentation.dashboard.DashboardScreen
+import com.usj.fintrack.presentation.transaction.CreateTransactionScreen
+import com.usj.fintrack.presentation.transaction.TransactionDetailScreen
+import com.usj.fintrack.presentation.transaction.TransactionsScreen
 
 /**
  * Central navigation graph for FinTrack.
@@ -56,7 +59,11 @@ fun AppNavGraph(
             DashboardScreen(navController = navController)
         }
         composable(Screen.Transactions.route) {
-            PlaceholderScreen("Transacciones")
+            TransactionsScreen(
+                onNavigateToCreate = { navController.navigate(Screen.CreateTransaction.route) },
+                onNavigateToDetail = { id -> navController.navigate(Screen.TransactionDetail.navRoute(id)) },
+                onNavigateToEdit = { id -> navController.navigate(Screen.EditTransaction.navRoute(id)) }
+            )
         }
         composable(Screen.Accounts.route) {
             AccountsScreen(navController = navController)
@@ -70,7 +77,21 @@ fun AppNavGraph(
 
         // ── Transaction sub-screens ──────────────────────────────────────────
         composable(Screen.CreateTransaction.route) {
-            PlaceholderScreen("Nueva transacción")
+            CreateTransactionScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route     = Screen.EditTransaction.routeWithArg,
+            arguments = listOf(
+                navArgument(Screen.EditTransaction.ARG_ID) { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            CreateTransactionScreen(
+                onNavigateBack = { navController.popBackStack() },
+                transactionId = backStackEntry.arguments?.getLong(Screen.EditTransaction.ARG_ID)
+            )
         }
 
         composable(
@@ -78,8 +99,13 @@ fun AppNavGraph(
             arguments = listOf(
                 navArgument(Screen.TransactionDetail.ARG_ID) { type = NavType.LongType }
             )
-        ) {
-            PlaceholderScreen("Detalle transacción")
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong(Screen.TransactionDetail.ARG_ID) ?: 0L
+            TransactionDetailScreen(
+                transactionId = id,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { id -> navController.navigate(Screen.EditTransaction.navRoute(id)) }
+            )
         }
 
         composable(Screen.TicketCapture.route) {
@@ -126,7 +152,8 @@ fun AppNavGraph(
             AccountDetailScreen(
                 accountId = id,
                 onNavigateBack = { navController.popBackStack() },
-                onNavigateToEdit = { navController.navigate(Screen.EditAccount.navRoute(id)) }
+                onNavigateToEdit = { navController.navigate(Screen.EditAccount.navRoute(id)) },
+                onNavigateToTransactionDetail = { id -> navController.navigate(Screen.TransactionDetail.navRoute(id)) }
             )
         }
 

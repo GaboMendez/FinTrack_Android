@@ -16,18 +16,16 @@ class TransactionRepositoryImpl @Inject constructor(
 ) : TransactionRepository {
 
     override fun getAllTransactions(): Flow<List<Transaction>> =
-        transactionDao.getAll().map { entities ->
-            entities.map { entity ->
-                val withCategories = transactionDao.getTransactionWithCategories(entity.transactionId)
-                entity.toDomain(withCategories?.categories?.map { it.toDomain() } ?: emptyList())
+        transactionDao.getAllWithCategories().map { list ->
+            list.map { withCats ->
+                withCats.transaction.toDomain(withCats.categories.map { it.toDomain() })
             }
         }
 
     override fun getTransactionsByAccount(accountId: Long): Flow<List<Transaction>> =
-        transactionDao.getByAccount(accountId).map { entities ->
-            entities.map { entity ->
-                val withCategories = transactionDao.getTransactionWithCategories(entity.transactionId)
-                entity.toDomain(withCategories?.categories?.map { it.toDomain() } ?: emptyList())
+        transactionDao.getByAccountWithCategories(accountId).map { list ->
+            list.map { withCats ->
+                withCats.transaction.toDomain(withCats.categories.map { it.toDomain() })
             }
         }
 

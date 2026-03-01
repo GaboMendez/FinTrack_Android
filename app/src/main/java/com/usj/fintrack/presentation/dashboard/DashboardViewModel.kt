@@ -2,10 +2,9 @@ package com.usj.fintrack.presentation.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.usj.fintrack.domain.model.enum.TransactionType
 import com.usj.fintrack.domain.usecase.account.CalculateTotalBalanceUseCase
-import com.usj.fintrack.domain.usecase.account.GetAllAccountsUseCase
 import com.usj.fintrack.domain.usecase.budget.GetBudgetsUseCase
-import com.usj.fintrack.domain.usecase.transaction.GetTransactionStatsUseCase
 import com.usj.fintrack.domain.usecase.transaction.GetTransactionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,11 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
     private val getBudgetsUseCase: GetBudgetsUseCase,
-    private val calculateTotalBalanceUseCase: CalculateTotalBalanceUseCase,
-    private val getTransactionStatsUseCase: GetTransactionStatsUseCase
+    private val calculateTotalBalanceUseCase: CalculateTotalBalanceUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DashboardUiState(isLoading = true))
@@ -45,32 +42,27 @@ class DashboardViewModel @Inject constructor(
                 }
         }
 
-        // Monthly income / expense stats
+        // Recent transactions + monthly income/expense — all derived reactively
+        // from the same Flow so any type or amount edit is reflected immediately.
         viewModelScope.launch {
-            try {
-                val (startOfMonth, now) = currentMonthRange()
-                val stats = getTransactionStatsUseCase(startOfMonth, now)
-                _uiState.update {
-                    it.copy(
-                        monthlyIncome = stats.totalIncome,
-                        monthlyExpense = stats.totalExpense
-                    )
-                }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(errorMessage = e.message) }
-            }
-        }
-
-        // Recent transactions (last 5)
-        viewModelScope.launch {
+            val (startOfMonth, now) = currentMonthRange()
             getTransactionsUseCase()
                 .catch { e ->
                     _uiState.update { it.copy(errorMessage = e.message) }
                 }
                 .collect { transactions ->
+                    val monthly = transactions.filter { it.date in startOfMonth..now }
+                    val income = monthly
+                        .filter { it.type == TransactionType.INCOME }
+                        .sumOf { it.amount }
+                    val expense = monthly
+                        .filter { it.type == TransactionType.EXPENSE }
+                        .sumOf { it.amount }
                     _uiState.update {
                         it.copy(
                             recentTransactions = transactions.take(5),
+                            monthlyIncome = income,
+                            monthlyExpense = expense,
                             isLoading = false
                         )
                     }
