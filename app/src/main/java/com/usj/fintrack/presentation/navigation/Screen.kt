@@ -40,6 +40,13 @@ sealed class Screen(val route: String) {
     // ── Account sub-screens ───────────────────────────────────────────────────
     object CreateAccount : Screen("create_account")
 
+    /** Deep-link: `edit_account/{accountId}` */
+    object EditAccount : Screen("edit_account") {
+        const val ARG_ID = "accountId"
+        val routeWithArg get() = "$route/{$ARG_ID}"
+        fun navRoute(id: Long) = "$route/$id"
+    }
+
     /** Deep-link: `account_detail/{accountId}` */
     object AccountDetail : Screen("account_detail") {
         const val ARG_ID = "accountId"

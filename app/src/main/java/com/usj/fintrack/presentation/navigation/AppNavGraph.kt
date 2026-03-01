@@ -12,6 +12,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.usj.fintrack.presentation.account.AccountDetailScreen
+import com.usj.fintrack.presentation.account.AccountsScreen
+import com.usj.fintrack.presentation.account.CreateAccountScreen
 import com.usj.fintrack.presentation.dashboard.DashboardScreen
 
 /**
@@ -56,7 +59,7 @@ fun AppNavGraph(
             PlaceholderScreen("Transacciones")
         }
         composable(Screen.Accounts.route) {
-            PlaceholderScreen("Cuentas")
+            AccountsScreen(navController = navController)
         }
         composable(Screen.Budgets.route) {
             PlaceholderScreen("Presupuestos")
@@ -98,7 +101,19 @@ fun AppNavGraph(
 
         // ── Account sub-screens ──────────────────────────────────────────────
         composable(Screen.CreateAccount.route) {
-            PlaceholderScreen("Nueva cuenta")
+            CreateAccountScreen(onNavigateBack = { navController.popBackStack() })
+        }
+
+        composable(
+            route     = Screen.EditAccount.routeWithArg,
+            arguments = listOf(
+                navArgument(Screen.EditAccount.ARG_ID) { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            CreateAccountScreen(
+                onNavigateBack = { navController.popBackStack() },
+                accountId = backStackEntry.arguments?.getLong(Screen.EditAccount.ARG_ID)
+            )
         }
 
         composable(
@@ -106,8 +121,13 @@ fun AppNavGraph(
             arguments = listOf(
                 navArgument(Screen.AccountDetail.ARG_ID) { type = NavType.LongType }
             )
-        ) {
-            PlaceholderScreen("Detalle cuenta")
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong(Screen.AccountDetail.ARG_ID) ?: 0L
+            AccountDetailScreen(
+                accountId = id,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { navController.navigate(Screen.EditAccount.navRoute(id)) }
+            )
         }
 
         // ── Budget sub-screens ───────────────────────────────────────────────
