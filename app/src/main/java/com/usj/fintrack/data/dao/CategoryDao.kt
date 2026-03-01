@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.usj.fintrack.data.entity.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -24,4 +25,8 @@ interface CategoryDao {
 
     @Query("DELETE FROM categories WHERE category_id = :id")
     suspend fun deleteById(id: Long)
+
+    /** Safe update — does NOT delete-then-reinsert; preserves all FK relations. */
+    @Update
+    suspend fun update(category: CategoryEntity)
 }

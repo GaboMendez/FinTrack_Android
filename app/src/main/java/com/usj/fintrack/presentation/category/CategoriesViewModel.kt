@@ -6,6 +6,7 @@ import com.usj.fintrack.domain.model.Category
 import com.usj.fintrack.domain.usecase.category.CreateCategoryUseCase
 import com.usj.fintrack.domain.usecase.category.DeleteCategoryUseCase
 import com.usj.fintrack.domain.usecase.category.GetCategoriesUseCase
+import com.usj.fintrack.domain.usecase.category.UpdateCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val createCategoryUseCase: CreateCategoryUseCase,
+    private val updateCategoryUseCase: UpdateCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase
 ) : ViewModel() {
 
@@ -40,22 +42,50 @@ class CategoriesViewModel @Inject constructor(
     }
 
     /** Create a brand-new category. */
-    fun createCategory(name: String, colorHex: String) {
+    fun createCategory(name: String, colorHex: String, isDefault: Boolean = false) {
         viewModelScope.launch {
-            val category = Category(name = name, iconName = "label", colorHex = colorHex)
+            val nameTaken = _uiState.value.categories
+                .any { it.name.equals(name.trim(), ignoreCase = true) }
+            if (nameTaken) {
+                _uiState.update { it.copy(errorMessage = "A category named \"${name.trim()}\" already exists.") }
+                return@launch
+            }
+            val colorTaken = _uiState.value.categories
+                .any { it.colorHex.equals(colorHex, ignoreCase = true) }
+            if (colorTaken) {
+                _uiState.update {
+                    it.copy(errorMessage = "Another category already uses this color. Please choose a different color.")
+                }
+                return@launch
+            }
+            val category = Category(name = name.trim(), iconName = "label", colorHex = colorHex, isDefault = isDefault)
             createCategoryUseCase(category)
                 .onFailure { e -> _uiState.update { it.copy(errorMessage = e.message) } }
         }
     }
 
     /**
-     * Update an existing category by replacing it (Room uses REPLACE strategy).
-     * The [id] and [isDefault] flag are preserved.
+     * Update an existing category via SQL UPDATE (preserves all FK relations — no CASCADE).
+     * The [id] is kept from [existing]; [isDefault] can be toggled.
      */
-    fun updateCategory(existing: Category, name: String, colorHex: String) {
+    fun updateCategory(existing: Category, name: String, colorHex: String, isDefault: Boolean) {
         viewModelScope.launch {
-            val updated = existing.copy(name = name, colorHex = colorHex)
-            createCategoryUseCase(updated)
+            val nameTaken = _uiState.value.categories
+                .any { it.name.equals(name.trim(), ignoreCase = true) && it.id != existing.id }
+            if (nameTaken) {
+                _uiState.update { it.copy(errorMessage = "A category named \"${name.trim()}\" already exists.") }
+                return@launch
+            }
+            val colorTaken = _uiState.value.categories
+                .any { it.colorHex.equals(colorHex, ignoreCase = true) && it.id != existing.id }
+            if (colorTaken) {
+                _uiState.update {
+                    it.copy(errorMessage = "Another category already uses this color. Please choose a different color.")
+                }
+                return@launch
+            }
+            val updated = existing.copy(name = name.trim(), colorHex = colorHex, isDefault = isDefault)
+            updateCategoryUseCase(updated)
                 .onFailure { e -> _uiState.update { it.copy(errorMessage = e.message) } }
         }
     }

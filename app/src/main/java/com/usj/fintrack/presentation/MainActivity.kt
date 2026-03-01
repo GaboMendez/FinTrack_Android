@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                                                 contentDescription = item.label
                                             )
                                         },
-                                        label = { Text(text = item.label) }
+                                        label = { Text(text = item.label, fontSize = 10.sp) }
                                     )
                                 }
                             }
@@ -73,4 +74,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-

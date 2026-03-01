@@ -36,6 +36,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -95,11 +96,11 @@ fun CategoriesScreen(
         CategoryDialog(
             initial = editing,
             onDismiss = { dialogCategory = null },
-            onConfirm = { name, colorHex ->
+            onConfirm = { name, colorHex, isDefault ->
                 if (editing.id == 0L) {
-                    viewModel.createCategory(name, colorHex)
+                    viewModel.createCategory(name, colorHex, isDefault)
                 } else {
-                    viewModel.updateCategory(editing, name, colorHex)
+                    viewModel.updateCategory(editing, name, colorHex, isDefault)
                 }
                 dialogCategory = null
             }
@@ -268,10 +269,11 @@ private fun CategoryRow(
 private fun CategoryDialog(
     initial: Category,
     onDismiss: () -> Unit,
-    onConfirm: (name: String, colorHex: String) -> Unit
+    onConfirm: (name: String, colorHex: String, isDefault: Boolean) -> Unit
 ) {
     var name by rememberSaveable { mutableStateOf(initial.name) }
     var selectedColor by remember { mutableStateOf(initial.colorHex.ifBlank { categoryColorPalette.first() }) }
+    var isDefault by rememberSaveable { mutableStateOf(initial.isDefault) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -309,11 +311,30 @@ private fun CategoryDialog(
                         )
                     }
                 }
+
+                // ── Default toggle ──────────────────────────────────────────
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Default category", style = MaterialTheme.typography.bodyMedium)
+                        Text(
+                            text = "Default categories are protected from deletion",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = isDefault,
+                        onCheckedChange = { isDefault = it }
+                    )
+                }
             }
         },
         confirmButton = {
             TextButton(
-                onClick = { if (name.isNotBlank()) onConfirm(name.trim(), selectedColor) },
+                onClick = { if (name.isNotBlank()) onConfirm(name.trim(), selectedColor, isDefault) },
                 enabled = name.isNotBlank()
             ) { Text("Save") }
         },

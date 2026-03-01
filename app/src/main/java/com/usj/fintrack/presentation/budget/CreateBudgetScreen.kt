@@ -59,24 +59,21 @@ fun CreateBudgetScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    // Default period = current calendar month
+    // Default period = current calendar month in UTC so it stays consistent with
+    // DatePicker which always returns UTC midnight for the selected day.
     val defaultStart = remember {
-        Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_MONTH, 1)
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.timeInMillis
+        val cal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+        cal.set(Calendar.DAY_OF_MONTH, 1)
+        cal.set(Calendar.HOUR_OF_DAY, 0); cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0); cal.set(Calendar.MILLISECOND, 0)
+        cal.timeInMillis
     }
     val defaultEnd = remember {
-        Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_MONTH, getActualMaximum(Calendar.DAY_OF_MONTH))
-            set(Calendar.HOUR_OF_DAY, 23)
-            set(Calendar.MINUTE, 59)
-            set(Calendar.SECOND, 59)
-            set(Calendar.MILLISECOND, 999)
-        }.timeInMillis
+        val cal = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"))
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH))
+        cal.set(Calendar.HOUR_OF_DAY, 23); cal.set(Calendar.MINUTE, 59)
+        cal.set(Calendar.SECOND, 59); cal.set(Calendar.MILLISECOND, 999)
+        cal.timeInMillis
     }
 
     var selectedCategoryId by remember { mutableStateOf<Long?>(null) }
@@ -133,7 +130,8 @@ fun CreateBudgetScreen(
             onDismissRequest = { showStartDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
-                    dpState.selectedDateMillis?.let { periodStartDate = it }
+                    // DatePicker already returns UTC midnight — use it directly.
+                    dpState.selectedDateMillis?.let { ms -> periodStartDate = ms }
                     showStartDatePicker = false
                 }) { Text("OK") }
             },
@@ -149,7 +147,8 @@ fun CreateBudgetScreen(
             onDismissRequest = { showEndDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
-                    dpState.selectedDateMillis?.let { periodEndDate = it }
+                    // DatePicker returns UTC midnight; add 86399999 ms to cover the full UTC day.
+                    dpState.selectedDateMillis?.let { ms -> periodEndDate = ms + 86_399_999L }
                     showEndDatePicker = false
                 }) { Text("OK") }
             },

@@ -53,7 +53,7 @@ fun BudgetProgressBar(
             progress = progress,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(8.dp),
+                .height(12.dp),
             color = progressColor,
             trackColor = MaterialTheme.colorScheme.surfaceVariant
         )
