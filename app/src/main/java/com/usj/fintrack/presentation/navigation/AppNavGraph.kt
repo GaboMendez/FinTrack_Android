@@ -12,6 +12,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.usj.fintrack.presentation.dashboard.DashboardScreen
 
 /**
  * Central navigation graph for FinTrack.
@@ -49,7 +50,7 @@ fun AppNavGraph(
 
         // ── Main bottom-nav destinations ─────────────────────────────────────
         composable(Screen.Dashboard.route) {
-            PlaceholderScreen("Dashboard")
+            DashboardScreen(navController = navController)
         }
         composable(Screen.Transactions.route) {
             PlaceholderScreen("Transacciones")

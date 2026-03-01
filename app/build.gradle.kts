@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.usj.fintrack"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.usj.fintrack"
