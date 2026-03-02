@@ -4,50 +4,60 @@ import androidx.compose.ui.graphics.Color
 
 // ─── Brand / Primary ─────────────────────────────────────────────────────────
 val FinTrackGreen10 = Color(0xFF002112)
-val FinTrackGreen20 = Color(0xFF004225)
 val FinTrackGreen30 = Color(0xFF006438)
-val FinTrackGreen40 = Color(0xFF1B8A6B) // primary light
-val FinTrackGreen80 = Color(0xFF6CDBAD) // primary dark
+val FinTrackGreen40 = Color(0xFF1B8A6B)
+val FinTrackGreen80 = Color(0xFF6CDBAD)
 val FinTrackGreen90 = Color(0xFF89F8C8)
 
-// ─── Secondary (Slate Blue) ──────────────────────────────────────────────────
-val SlateBlue10 = Color(0xFF0A1929)
-val SlateBlue20 = Color(0xFF152D4A)
-val SlateBlue30 = Color(0xFF21456E)
-val SlateBlue40 = Color(0xFF445E91) // secondary light
-val SlateBlue80 = Color(0xFFABC4F0) // secondary dark
-val SlateBlue90 = Color(0xFFD3E4FF)
-
-// ─── Tertiary (Amber / Goals) ─────────────────────────────────────────────────
-val Amber10 = Color(0xFF2B1700)
-val Amber20 = Color(0xFF562C00)
-val Amber30 = Color(0xFF804400)
-val Amber40 = Color(0xFFAB6000) // tertiary light
-val Amber80 = Color(0xFFFFBA43) // tertiary dark
-val Amber90 = Color(0xFFFFDDA8)
-
-// ─── Error / Expense (Red) ───────────────────────────────────────────────────
 val FinTrackRed10 = Color(0xFF410005)
-val FinTrackRed20 = Color(0xFF680010)
 val FinTrackRed30 = Color(0xFF920020)
-val FinTrackRed40 = Color(0xFFBA1A35) // error light
-val FinTrackRed80 = Color(0xFFFFB3B8) // error dark
 val FinTrackRed90 = Color(0xFFFFDADA)
 
-// ─── Neutral (Background / Surface) ─────────────────────────────────────────
-val Neutral10 = Color(0xFF191C1B)
-val Neutral20 = Color(0xFF2D3130)
-val Neutral90 = Color(0xFFE0E3E1)
-val Neutral95 = Color(0xFFEFF1EF)
-val Neutral99 = Color(0xFFF6FAF7) // light background
+val Amber40 = Color(0xFFAB6000)
+val Amber80 = Color(0xFFFFBA43)
+
+// ─── Brand Primary (Red from logo) ───────────────────────────────────────────
+val BrandRed10 = Color(0xFF410000)
+val BrandRed20 = Color(0xFF6A0000)
+val BrandRed30 = Color(0xFF8F0000)
+val BrandRed40 = Color(0xFFC62828)   // Primary Light
+val BrandRed80 = Color(0xFFFF8A80)   // Primary Dark
+val BrandRed90 = Color(0xFFFFDAD6)
+
+// ─── Secondary (Orange from logo) ────────────────────────────────────────────
+val BrandOrange10 = Color(0xFF2E1400)
+val BrandOrange20 = Color(0xFF5A2800)
+val BrandOrange30 = Color(0xFF8A3E00)
+val BrandOrange40 = Color(0xFFF4511E)  // Secondary Light
+val BrandOrange80 = Color(0xFFFFAB91)  // Secondary Dark
+val BrandOrange90 = Color(0xFFFFDBCF)
+
+// ─── Tertiary (Yellow accent from logo) ──────────────────────────────────────
+val BrandYellow10 = Color(0xFF332200)
+val BrandYellow20 = Color(0xFF664400)
+val BrandYellow30 = Color(0xFF996600)
+val BrandYellow40 = Color(0xFFFFA000)  // Tertiary Light
+val BrandYellow80 = Color(0xFFFFD54F)  // Tertiary Dark
+val BrandYellow90 = Color(0xFFFFECB3)
+
+// ─── Error (slightly deeper red) ─────────────────────────────────────────────
+val BrandError40 = Color(0xFFD32F2F)
+val BrandError80 = Color(0xFFFF8A80)
+val BrandError90 = Color(0xFFFFDAD6)
+
+// ─── Neutral (based on logo black background) ───────────────────────────────
+val Neutral10 = Color(0xFF121212)
+val Neutral20 = Color(0xFF1E1E1E)
+val Neutral90 = Color(0xFFE6E1E5)
+val Neutral95 = Color(0xFFF3EDF7)
+val Neutral99 = Color(0xFFFFFBFE)
 
 // ─── Neutral Variant ─────────────────────────────────────────────────────────
-val NeutralVariant30 = Color(0xFF3F4945)
-val NeutralVariant50 = Color(0xFF6B7570)
-val NeutralVariant60 = Color(0xFF849490)
-val NeutralVariant80 = Color(0xFFBEC9C4)
-val NeutralVariant90 = Color(0xFFDAE5DF)
-
+val NeutralVariant30 = Color(0xFF49454F)
+val NeutralVariant50 = Color(0xFF79747E)
+val NeutralVariant60 = Color(0xFF938F99)
+val NeutralVariant80 = Color(0xFFCAC4D0)
+val NeutralVariant90 = Color(0xFFE7E0EC)
 // ─── Semantic: Income / Expense ──────────────────────────────────────────────
 /** Use for income amounts, positive balances */
 val IncomeGreen = Color(0xFF1B8A6B)

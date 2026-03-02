@@ -12,25 +12,25 @@ import androidx.compose.ui.graphics.Color
 
 // ─── Light color scheme ───────────────────────────────────────────────────────
 private val LightColorScheme = lightColorScheme(
-    primary             = FinTrackGreen40,
+    primary             = BrandRed40,
     onPrimary           = Color.White,
-    primaryContainer    = FinTrackGreen90,
-    onPrimaryContainer  = FinTrackGreen10,
+    primaryContainer    = BrandRed90,
+    onPrimaryContainer  = BrandRed10,
 
-    secondary           = SlateBlue40,
+    secondary           = BrandOrange40,
     onSecondary         = Color.White,
-    secondaryContainer  = SlateBlue90,
-    onSecondaryContainer = SlateBlue10,
+    secondaryContainer  = BrandOrange90,
+    onSecondaryContainer = BrandOrange10,
 
-    tertiary            = Amber40,
-    onTertiary          = Color.White,
-    tertiaryContainer   = Amber90,
-    onTertiaryContainer = Amber10,
+    tertiary            = BrandYellow40,
+    onTertiary          = Color.Black,
+    tertiaryContainer   = BrandYellow90,
+    onTertiaryContainer = BrandYellow10,
 
-    error               = FinTrackRed40,
+    error               = BrandError40,
     onError             = Color.White,
-    errorContainer      = FinTrackRed90,
-    onErrorContainer    = FinTrackRed10,
+    errorContainer      = BrandError90,
+    onErrorContainer    = BrandRed10,
 
     background          = Neutral99,
     onBackground        = Neutral10,
@@ -45,33 +45,32 @@ private val LightColorScheme = lightColorScheme(
 
     inverseSurface      = Neutral20,
     inverseOnSurface    = Neutral95,
-    inversePrimary      = FinTrackGreen80,
+    inversePrimary      = BrandRed80,
 
-    surfaceTint         = FinTrackGreen40,
+    surfaceTint         = BrandRed40,
     scrim               = Color.Black
 )
-
 // ─── Dark color scheme ────────────────────────────────────────────────────────
 private val DarkColorScheme = darkColorScheme(
-    primary             = FinTrackGreen80,
-    onPrimary           = FinTrackGreen20,
-    primaryContainer    = FinTrackGreen30,
-    onPrimaryContainer  = FinTrackGreen90,
+    primary             = BrandRed80,
+    onPrimary           = BrandRed20,
+    primaryContainer    = BrandRed30,
+    onPrimaryContainer  = BrandRed90,
 
-    secondary           = SlateBlue80,
-    onSecondary         = SlateBlue20,
-    secondaryContainer  = SlateBlue30,
-    onSecondaryContainer = SlateBlue90,
+    secondary           = BrandOrange80,
+    onSecondary         = BrandOrange20,
+    secondaryContainer  = BrandOrange30,
+    onSecondaryContainer = BrandOrange90,
 
-    tertiary            = Amber80,
-    onTertiary          = Amber20,
-    tertiaryContainer   = Amber30,
-    onTertiaryContainer = Amber90,
+    tertiary            = BrandYellow80,
+    onTertiary          = Color.Black,
+    tertiaryContainer   = BrandYellow30,
+    onTertiaryContainer = BrandYellow90,
 
-    error               = FinTrackRed80,
-    onError             = FinTrackRed20,
-    errorContainer      = FinTrackRed30,
-    onErrorContainer    = FinTrackRed90,
+    error               = BrandError80,
+    onError             = BrandRed20,
+    errorContainer      = BrandRed30,
+    onErrorContainer    = BrandRed90,
 
     background          = Neutral10,
     onBackground        = Neutral90,
@@ -86,12 +85,11 @@ private val DarkColorScheme = darkColorScheme(
 
     inverseSurface      = Neutral90,
     inverseOnSurface    = Neutral20,
-    inversePrimary      = FinTrackGreen40,
+    inversePrimary      = BrandRed40,
 
-    surfaceTint         = FinTrackGreen80,
+    surfaceTint         = BrandRed80,
     scrim               = Color.Black
 )
-
 // ─── Extended colors (income / expense semantic tokens) ───────────────────────
 
 /**

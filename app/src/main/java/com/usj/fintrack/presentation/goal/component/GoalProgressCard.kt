@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.usj.fintrack.domain.model.Goal
 import com.usj.fintrack.presentation.theme.Amber40
-import com.usj.fintrack.presentation.theme.Amber80
 import com.usj.fintrack.presentation.theme.FinTrackGreen40
 import com.usj.fintrack.presentation.theme.FinTrackGreen80
 import com.usj.fintrack.presentation.theme.LocalCurrencySymbol
