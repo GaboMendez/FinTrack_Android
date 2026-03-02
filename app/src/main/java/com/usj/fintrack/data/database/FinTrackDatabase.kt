@@ -2,8 +2,6 @@ package com.usj.fintrack.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.usj.fintrack.data.database.Converters
 import com.usj.fintrack.data.dao.AccountDao
 import com.usj.fintrack.data.dao.BudgetDao
 import com.usj.fintrack.data.dao.CategoryDao
@@ -33,7 +31,7 @@ import com.usj.fintrack.data.entity.UserProfileEntity
     version = 1,
     exportSchema = true
 )
-//@TypeConverters(Converters::class)
+
 abstract class FinTrackDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

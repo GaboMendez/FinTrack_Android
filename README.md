@@ -125,8 +125,7 @@ com.usj.fintrack/
 │   │   ├── BudgetDao.kt
 │   │   └── GoalDao.kt
 │   ├── database/
-│   │   ├── FinTrackDatabase.kt     # Room @Database (8 entities, version 1)
-│   │   └── Converters.kt
+│   │   └──FinTrackDatabase.kt     # Room @Database (8 entities, version 1)
 │   ├── entity/                     # Room @Entity classes
 │   │   ├── UserEntity.kt
 │   │   ├── UserProfileEntity.kt
