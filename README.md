@@ -230,6 +230,86 @@ User ──1:N── Goal
 Category ──1:N── Budget
 ```
 
+```mermaid
+erDiagram
+    users {
+        Long user_id PK
+        String email UK
+        Long created_at
+    }
+
+    user_profiles {
+        Long profile_id PK
+        Long user_owner_id FK
+        String name
+        String avatar_url
+        String currency
+    }
+
+    accounts {
+        Long account_id PK
+        Long user_id FK
+        String name
+        String type
+        Double balance
+        String currency
+        Long created_at
+    }
+
+    transactions {
+        Long transaction_id PK
+        Long account_id FK
+        Double amount
+        String type
+        Long date
+        String description
+        String image_uri
+        String location
+        Long created_at
+    }
+
+    categories {
+        Long category_id PK
+        String name
+        String icon_name
+        String color_hex
+        Boolean is_default
+    }
+
+    transaction_category {
+        Long transaction_id FK
+        Long category_id FK
+    }
+
+    budgets {
+        Long budget_id PK
+        Long user_id FK
+        Long category_id FK
+        Double limit_amount
+        Double spent_amount
+        Long period_start_date
+        Long period_end_date
+    }
+
+    goals {
+        Long goal_id PK
+        Long user_id FK
+        String name
+        Double target_amount
+        Double current_amount
+        Long deadline
+        Boolean is_completed
+    }
+
+    users ||--o| user_profiles : "has profile"
+    users ||--o{ accounts : "owns"
+    users ||--o{ goals : "has"
+    users ||--o{ budgets : "manages"
+    accounts ||--o{ transactions : "contains"
+    transactions }o--o{ categories : "transaction_category"
+    categories ||--o{ budgets : "tracked by"
+```
+
 ### Entities
 
 | Entity | Table | Key Fields |
